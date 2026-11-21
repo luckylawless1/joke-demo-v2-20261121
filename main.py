@@ -11,12 +11,16 @@ MAX_CHARS = 280
 
 SETUP = "I pair-program with an AI agent: I write the bugs, it writes "
 PUNCHLINE = "the fixes, and we both pretend the code review was my idea."
-JOKE = SETUP + PUNCHLINE
+
+
+def build_joke() -> str:
+    """Assemble the one-line joke from its setup and punchline."""
+    return (SETUP + PUNCHLINE).strip()
 
 
 def render_entry() -> str:
     """Return the entry text with exactly one trailing newline."""
-    text = JOKE.strip()
+    text = build_joke()
     if not text:
         raise ValueError("entry text must not be blank")
     if len(text) > MAX_CHARS:
