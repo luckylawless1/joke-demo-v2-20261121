@@ -7,11 +7,11 @@ Deterministic, no network access.
 from pathlib import Path
 
 OUTPUT_PATH = Path("/output/entry.txt")
+MAX_CHARS = 280
 
-JOKE = (
-    "I pair-program with an AI agent: I write the bugs, it writes "
-    "the fixes, and we both pretend the code review was my idea."
-)
+SETUP = "I pair-program with an AI agent: I write the bugs, it writes "
+PUNCHLINE = "the fixes, and we both pretend the code review was my idea."
+JOKE = SETUP + PUNCHLINE
 
 
 def render_entry() -> str:
@@ -19,7 +19,7 @@ def render_entry() -> str:
     text = JOKE.strip()
     if not text:
         raise ValueError("entry text must not be blank")
-    if len(text) > 280:
+    if len(text) > MAX_CHARS:
         raise ValueError("entry text must be at most 280 characters")
     return text + "\n"
 
@@ -34,7 +34,8 @@ def write_entry() -> int:
 
 def main() -> None:
     count = write_entry()
-    print(f"Wrote {count} bytes to {OUTPUT_PATH}")
+    chars = len(render_entry().rstrip("\n"))
+    print(f"Wrote {count} bytes ({chars} chars) to {OUTPUT_PATH}")
 
 
 if __name__ == "__main__":
